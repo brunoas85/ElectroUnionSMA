@@ -1,0 +1,47 @@
+@import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=Archivo+Narrow:ital,wght@1,800;1,900&display=swap");
+
+@theme {
+  --font-sans: "Segoe UI", system-ui, Roboto, sans-serif;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+}
+
+/* =====================================================
+   TEMA INDUSTRIAL — cálido, ámbar eléctrico, taller
+   ===================================================== */
+[data-tema="industrial"] {
+  /* Neutros cálidos (reemplazan el gris frío del tema oscuro) */
+  --color-neutral-900: #e6dfd5;
+  --color-neutral-800: #dad2c7;
+  --color-neutral-700: #bcb4a6;
+  --color-neutral-50:  #1c1917;
+  --color-neutral-200: #44403a;
+  --color-neutral-400: #6b6358;
+  --color-neutral-500: #9c948a;
+
+  /* Texto en inputs y labels (no estaban sobrescritos, quedaban muy claros) */
+  --color-neutral-100: #2c2825;
+  --color-neutral-300: #57504a;
+
+  /* Acento: lime → ámbar eléctrico */
+  --color-lime-400: #f59e0b;
+  --color-lime-300: #fbbf24;
+  --color-lime-500: #d97706;
+}
+
+/*
+  bg-neutral-950 se sobreescribe por clase porque NO podemos cambiar
+  --color-neutral-950 globalmente: el texto de los botones CTA usa esa
+  variable para mantenerse oscuro sobre el botón ámbar.
+*/
+[data-tema="industrial"] .bg-neutral-950 {
+  background-color: #f2ece3;
+}

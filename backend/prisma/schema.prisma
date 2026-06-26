@@ -1,0 +1,53 @@
+// Schema de ElectroUniónSMA — taller electromecánico
+// Cliente -> Vehiculo (1 a muchos) -> Revision (1 a muchos)
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Cliente {
+  id        Int       @id @default(autoincrement())
+  nombre    String
+  telefono  String    @unique
+  vehiculos Vehiculo[]
+  creadoEn  DateTime  @default(now())
+}
+
+model Vehiculo {
+  id         Int        @id @default(autoincrement())
+  patente    String     @unique
+  marca      String
+  modelo     String
+  anio       Int
+  cliente    Cliente    @relation(fields: [clienteId], references: [id])
+  clienteId  Int
+  revisiones Revision[]
+  creadoEn   DateTime   @default(now())
+}
+
+model Revision {
+  id          Int      @id @default(autoincrement())
+  vehiculo    Vehiculo @relation(fields: [vehiculoId], references: [id])
+  vehiculoId  Int
+  fecha       DateTime
+  descripcion String
+  mecanico    String
+  creadoEn    DateTime @default(now())
+}
+
+model Turno {
+  id           Int      @id @default(autoincrement())
+  nombre       String
+  telefono     String
+  patente      String?
+  servicio     String
+  fechaDeseada DateTime
+  comentario   String?
+  estado       String   @default("pendiente")
+  creadoEn     DateTime @default(now())
+}
