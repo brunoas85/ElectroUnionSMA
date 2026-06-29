@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: electrounionsma-api
+    env: node
+    rootDir: backend
+    buildCommand: npm install && npx prisma generate && npm run build
+    startCommand: npx prisma migrate deploy && node dist/index.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        value: file:./dev.db
+      - key: ADMIN_SECRET
+        sync: false

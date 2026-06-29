@@ -8,7 +8,7 @@ import { TemaProvider } from './context/TemaContext.tsx'
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <TemaProvider>
-      <BrowserRouter>
+      <BrowserRouter basename={import.meta.env.BASE_URL}>
         <App />
       </BrowserRouter>
     </TemaProvider>
