@@ -28,6 +28,21 @@ export interface ErrorResponse {
   error: string;
 }
 
+export interface CrearRevisionInput {
+  patente: string;
+  fecha: string;
+  descripcion: string;
+  mecanico: string;
+}
+
+export interface RevisionCreadaDTO {
+  id: number;
+  vehiculoId: number;
+  fecha: string;
+  descripcion: string;
+  mecanico: string;
+}
+
 export interface CrearTurnoInput {
   nombre: string;
   telefono: string;

@@ -16,3 +16,14 @@ export interface TurnoCreado extends SolicitudTurno {
   id: number;
   estado: string;
 }
+
+export interface TurnoPanel {
+  id: number;
+  nombre: string;
+  telefono: string;
+  patente: string | null;
+  servicio: string;
+  fechaDeseada: string;
+  comentario: string | null;
+  estado: string;
+}

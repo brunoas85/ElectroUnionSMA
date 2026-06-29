@@ -4,6 +4,7 @@ import LandingPage from "./pages/LandingPage";
 import TurnosPage from "./pages/TurnosPage";
 import BusquedaPage from "./pages/BusquedaPage";
 import HistorialPage from "./pages/HistorialPage";
+import AdminPage from "./pages/AdminPage";
 
 /** Define las rutas de la app dentro del layout común (nav + footer). */
 export default function App() {
@@ -15,6 +16,7 @@ export default function App() {
         <Route path="/historial" element={<BusquedaPage />} />
         <Route path="/historial/:patente" element={<HistorialPage />} />
       </Route>
+      <Route path="/admin" element={<AdminPage />} />
     </Routes>
   );
 }

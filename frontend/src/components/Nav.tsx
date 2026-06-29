@@ -18,13 +18,13 @@ export default function Nav() {
   const enTurnos = pathname === "/turnos";
 
   return (
-    <header className="border-b border-neutral-800 bg-neutral-950">
+    <header className="sticky top-0 z-50 border-b border-neutral-800 bg-neutral-950">
       <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-4 px-4 py-4 sm:px-6">
         <Link to="/" className="shrink-0">
           <img
             src="/iconoElectro.png"
             alt="ElectroUniónSMA — Taller electromecánico"
-            className="h-14 w-14 rounded-md sm:h-16 sm:w-16"
+            className="h-[140px] w-auto rounded-md -scale-x-100"
           />
         </Link>
 
@@ -40,8 +40,8 @@ export default function Nav() {
                 to={link.href}
                 className={`whitespace-nowrap rounded-md px-1 py-1.5 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-lime-400 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-950 ${
                   activo
-                    ? "text-lime-400 underline underline-offset-4"
-                    : "hover:text-lime-400"
+                    ? "text-lime-400 underline underline-offset-4 [text-shadow:0_0_10px_rgba(163,230,53,0.8)]"
+                    : "hover:text-lime-400 hover:[text-shadow:0_0_10px_rgba(163,230,53,0.6)]"
                 }`}
               >
                 {link.texto}
@@ -55,8 +55,8 @@ export default function Nav() {
             to="/historial"
             className={`inline-flex min-h-[44px] items-center justify-center rounded-xl border px-4 text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-lime-400 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-950 ${
               enHistorial
-                ? "border-lime-400 bg-neutral-800 text-lime-400"
-                : "border-neutral-700 text-neutral-200 hover:bg-neutral-800"
+                ? "border-lime-400 bg-neutral-800 text-lime-400 shadow-[0_0_14px_rgba(163,230,53,0.35)]"
+                : "border-neutral-700 text-neutral-200 hover:bg-neutral-800 hover:border-lime-400 hover:text-lime-400 hover:shadow-[0_0_14px_rgba(163,230,53,0.35)]"
             }`}
           >
             Consultar historial
@@ -65,8 +65,8 @@ export default function Nav() {
             to="/turnos"
             className={`inline-flex min-h-[44px] items-center justify-center rounded-xl px-4 text-sm font-medium text-neutral-950 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-lime-400 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-950 ${
               enTurnos
-                ? "bg-lime-300 ring-2 ring-lime-400 ring-offset-1 ring-offset-neutral-950"
-                : "bg-lime-400 hover:bg-lime-300"
+                ? "bg-lime-300 ring-2 ring-lime-400 ring-offset-1 ring-offset-neutral-950 shadow-[0_0_18px_rgba(163,230,53,0.55)]"
+                : "bg-lime-400 hover:bg-lime-300 shadow-[0_0_14px_rgba(163,230,53,0.4)] hover:shadow-[0_0_22px_rgba(163,230,53,0.65)]"
             }`}
           >
             Pedir turno

@@ -33,6 +33,76 @@ function aTurnoDTO(turno: {
   };
 }
 
+const ESTADOS_VALIDOS = ["pendiente", "confirmado", "en revisión", "completado", "cancelado"];
+
+/**
+ * GET /api/turnos?estado=<estado>
+ * Lista todos los turnos, con filtro opcional por estado.
+ */
+export async function listarTurnos(req: Request, res: Response): Promise<void> {
+  const { estado } = req.query;
+
+  if (estado && (typeof estado !== "string" || !ESTADOS_VALIDOS.includes(estado))) {
+    res.status(400).json({ error: `El estado debe ser uno de: ${ESTADOS_VALIDOS.join(", ")}.` });
+    return;
+  }
+
+  const turnos = await prisma.turno.findMany({
+    where: estado ? { estado: estado as string } : undefined,
+    orderBy: { fechaDeseada: "asc" },
+  });
+
+  res.json(turnos.map(aTurnoDTO));
+}
+
+/**
+ * PATCH /api/turnos/:id
+ * Actualiza el estado de un turno.
+ */
+export async function actualizarEstadoTurno(req: Request, res: Response): Promise<void> {
+  const id = parseInt(req.params.id, 10);
+  if (isNaN(id)) {
+    res.status(400).json({ error: "ID de turno inválido." });
+    return;
+  }
+
+  const { estado } = req.body as { estado?: string };
+  if (!estado || !ESTADOS_VALIDOS.includes(estado)) {
+    res.status(400).json({ error: `El estado debe ser uno de: ${ESTADOS_VALIDOS.join(", ")}.` });
+    return;
+  }
+
+  const turno = await prisma.turno.findUnique({ where: { id } });
+  if (!turno) {
+    res.status(404).json({ error: "Turno no encontrado." });
+    return;
+  }
+
+  const actualizado = await prisma.turno.update({ where: { id }, data: { estado } });
+  res.json(aTurnoDTO(actualizado));
+}
+
+/**
+ * DELETE /api/turnos/:id
+ * Elimina un turno permanentemente.
+ */
+export async function eliminarTurno(req: Request, res: Response): Promise<void> {
+  const id = parseInt(req.params.id, 10);
+  if (isNaN(id)) {
+    res.status(400).json({ error: "ID de turno inválido." });
+    return;
+  }
+
+  const turno = await prisma.turno.findUnique({ where: { id } });
+  if (!turno) {
+    res.status(404).json({ error: "Turno no encontrado." });
+    return;
+  }
+
+  await prisma.turno.delete({ where: { id } });
+  res.status(204).send();
+}
+
 /**
  * POST /api/turnos
  * Crea una solicitud de turno para un cliente.
