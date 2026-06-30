@@ -18,16 +18,14 @@ export default function Nav() {
   const enTurnos = pathname === "/turnos";
 
   return (
-    <header className="sticky top-0 z-50 border-b border-neutral-800 bg-neutral-950">
+    <header className="relative sticky top-0 z-50 overflow-hidden border-b border-neutral-800 bg-neutral-900">
+      <img
+        src="/iconoElectro.png"
+        alt=""
+        aria-hidden="true"
+        className="absolute top-[-25px] z-10 h-[150px] w-auto rounded-md animate-auto-navbar"
+      />
       <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-4 px-4 py-4 sm:px-6">
-        <Link to="/" className="shrink-0">
-          <img
-            src="/iconoElectro.png"
-            alt="ElectroUniónSMA — Taller electromecánico"
-            className="h-[140px] w-auto rounded-md -scale-x-100"
-          />
-        </Link>
-
         <nav
           aria-label="Secciones del sitio"
           className="order-3 flex w-full gap-4 overflow-x-auto text-sm font-medium text-neutral-400 sm:order-none sm:w-auto sm:overflow-visible"

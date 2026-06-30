@@ -14,6 +14,15 @@ body {
   margin: 0;
 }
 
+@keyframes auto-navbar {
+  0%   { transform: translateX(-160px) scaleX(-1); }
+  100% { transform: translateX(100vw)  scaleX(-1); }
+}
+
+.animate-auto-navbar {
+  animation: auto-navbar 12s linear infinite;
+}
+
 /* =====================================================
    TEMA INDUSTRIAL — cálido, ámbar eléctrico, taller
    ===================================================== */
