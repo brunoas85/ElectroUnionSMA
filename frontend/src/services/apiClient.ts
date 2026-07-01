@@ -3,7 +3,7 @@
  * de errores para que los servicios no tengan que repetir lógica de fetch.
  */
 
-const API_URL = import.meta.env.VITE_API_URL ?? "http://localhost:3001/api";
+const API_URL = import.meta.env.VITE_API_URL ?? "/api";
 
 /** Error de la API con el código de estado HTTP asociado. */
 export class ApiError extends Error {

@@ -1,7 +1,7 @@
 /** Sección principal de la landing: identidad de marca del taller. */
 export default function HeroSection() {
   return (
-    <section className="px-4 py-16 text-center sm:px-6 sm:py-24">
+    <section className="px-4 py-8 text-center sm:px-6 sm:py-12">
       <h1>
         <span
           className="block text-5xl uppercase sm:text-7xl"
