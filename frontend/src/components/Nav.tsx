@@ -1,5 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { useTema } from "../context/TemaContext";
+import { useRef, useEffect } from "react";
 
 const LINKS_ANCLA = [
   { href: "/", texto: "Inicio" },
@@ -12,18 +13,91 @@ const LINKS_ANCLA = [
 export default function Nav() {
   const { tema, toggleTema } = useTema();
   const { pathname } = useLocation();
+  const carRef = useRef<HTMLImageElement>(null);
+  const btnHistorialRef = useRef<HTMLAnchorElement>(null);
 
   const enLanding = pathname === "/";
   const enHistorial = pathname.startsWith("/historial");
   const enTurnos = pathname === "/turnos";
 
+  useEffect(() => {
+    const car = carRef.current;
+    const btn = btnHistorialRef.current;
+    if (!car || !btn) return;
+
+    let x = -160;
+    let dir = 1;
+    const VEL = 120;
+    let lastT: number | null = null;
+    let justBounced = false;
+    let rafId: number;
+    let carWidth = 0;
+
+    const iniciar = () => {
+      // Cachear el ancho del auto una vez que la imagen cargó
+      carWidth = car.getBoundingClientRect().width || car.offsetWidth || 200;
+      car.style.transform = `translateX(${x}px) scaleX(-1)`;
+      rafId = requestAnimationFrame(frame);
+    };
+
+    const frame = (t: number) => {
+      if (lastT === null) lastT = t;
+      const dt = Math.min((t - lastT) / 1000, 0.05);
+      lastT = t;
+
+      x += dir * VEL * dt;
+
+      // Calcular el borde derecho desde x directamente (no desde getBoundingClientRect
+      // del auto, que puede devolver datos desactualizados con will-change: transform)
+      const carRight = x + carWidth;
+      const btnLeft = btn.getBoundingClientRect().left;
+
+      if (dir === 1 && !justBounced && carRight >= btnLeft - 5) {
+        dir = -1;
+        justBounced = true;
+      }
+
+      if (justBounced && carRight < btnLeft - 20) {
+        justBounced = false;
+      }
+
+      if (x < -carWidth - 50) {
+        x = -carWidth;
+        dir = 1;
+        justBounced = false;
+      }
+
+      if (x > window.innerWidth + 50) {
+        x = -carWidth;
+        dir = 1;
+        justBounced = false;
+      }
+
+      car.style.transform = `translateX(${x}px) scaleX(${dir === 1 ? -1 : 1})`;
+      rafId = requestAnimationFrame(frame);
+    };
+
+    if (car.complete && car.naturalWidth > 0) {
+      iniciar();
+    } else {
+      car.addEventListener("load", iniciar, { once: true });
+    }
+
+    return () => {
+      cancelAnimationFrame(rafId);
+      car.removeEventListener("load", iniciar);
+    };
+  }, []);
+
   return (
     <header className="relative sticky top-0 z-50 overflow-hidden border-b border-neutral-800 bg-neutral-900">
       <img
+        ref={carRef}
         src="/iconoElectro.png"
         alt=""
         aria-hidden="true"
-        className="absolute top-[-25px] z-10 h-[150px] w-auto rounded-md animate-auto-navbar"
+        className="absolute top-[-25px] z-10 h-[150px] w-auto rounded-md"
+        style={{}}
       />
       <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-4 px-4 py-4 sm:px-6">
         <nav
@@ -50,6 +124,7 @@ export default function Nav() {
 
         <div className="flex shrink-0 items-center gap-2">
           <Link
+            ref={btnHistorialRef}
             to="/historial"
             className={`inline-flex min-h-[44px] items-center justify-center rounded-xl border px-4 text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-lime-400 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-950 ${
               enHistorial
