@@ -60,7 +60,7 @@ export async function listarTurnos(req: Request, res: Response): Promise<void> {
  * Actualiza el estado de un turno.
  */
 export async function actualizarEstadoTurno(req: Request, res: Response): Promise<void> {
-  const id = parseInt(req.params.id, 10);
+  const id = parseInt(req.params.id as string, 10);
   if (isNaN(id)) {
     res.status(400).json({ error: "ID de turno inválido." });
     return;
@@ -87,7 +87,7 @@ export async function actualizarEstadoTurno(req: Request, res: Response): Promis
  * Elimina un turno permanentemente.
  */
 export async function eliminarTurno(req: Request, res: Response): Promise<void> {
-  const id = parseInt(req.params.id, 10);
+  const id = parseInt(req.params.id as string, 10);
   if (isNaN(id)) {
     res.status(400).json({ error: "ID de turno inválido." });
     return;

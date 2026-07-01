@@ -83,7 +83,7 @@ export async function buscarVehiculos(req: Request, res: Response): Promise<void
  * ordenado de la más reciente a la más antigua.
  */
 export async function obtenerHistorial(req: Request, res: Response): Promise<void> {
-  const { patente } = req.params;
+  const { patente } = req.params as { patente: string };
 
   if (!esPatenteValida(patente)) {
     res.status(400).json({ error: "El formato de la patente no es válido." });

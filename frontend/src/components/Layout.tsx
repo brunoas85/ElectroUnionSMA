@@ -12,7 +12,7 @@ export default function Layout() {
           src="/logoElectro.png"
           alt=""
           aria-hidden="true"
-          className="pointer-events-none fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 select-none rounded-full object-cover opacity-20 z-0"
+          className="pointer-events-none fixed left-1/2 top-[calc(50%+100px)] -translate-x-1/2 -translate-y-1/2 select-none rounded-full object-cover opacity-20 z-0"
           style={{ width: "min(700px, 90vw)", height: "min(700px, 90vw)" }}
         />
         <div className="relative z-10">
