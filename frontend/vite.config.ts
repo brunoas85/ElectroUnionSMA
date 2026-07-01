@@ -5,5 +5,10 @@ import tailwindcss from '@tailwindcss/vite'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), tailwindcss()],
-  base: process.env.NODE_ENV === "production" ? "/ElectroUnionSMA/" : "/",
+  base: "/",
+  server: {
+    proxy: {
+      "/api": "http://localhost:3001",
+    },
+  },
 })
